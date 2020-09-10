@@ -1,0 +1,15 @@
+venv/
+temp.env
+tmp
+.env
+env/
+env*
+*.pyc
+*.pyo
+*.egg
+*.egg-info/
+.cache/
+.pytest_cache/
+.gitignore
+Dockerfile
+LICENSE
