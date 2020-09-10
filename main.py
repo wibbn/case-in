@@ -11,7 +11,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def gbm_predict(data):
     model = CatBoostClassifier()
-    model.load_model('./models/gbm.cbm')
+    model.load_model('./models/gbm1.cbm')
     
     output = model.predict(data)
 
@@ -34,18 +34,17 @@ def maint_predict(data):
     nn_input = data['past_vib']
     nn_out = nn_predict(nn_input).tolist()
 
+    print(np.mean(nn_out))
+
     data['next_mean_64hrs'] = np.mean(nn_out)
     data['next_std_64hrs'] = np.std(nn_out)
 
     gbm_input = pd.Series(data).drop(['past_vib'])
-
-    print(gbm_input)
-
-    gbm_out = gbm_predict(gbm_input)
+    gbm_out = gbm_predict([gbm_input])[0][0]
 
     return gbm_out
 
 if __name__ == "__main__":
     df = pd.read_csv('./data/small_df.csv')
-    s = df.iloc[0]
+    s = df.iloc[2]
     print(maint_predict(s))

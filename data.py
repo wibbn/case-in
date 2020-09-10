@@ -4,7 +4,7 @@ import torch
 import datetime
 
 def create_gbm_dataset(df, test=False):
-    drop_cols = ['datetime', 'past_vib', 'future_vib', 'failure', 'model']
+    drop_cols = ['machineID', 'datetime', 'past_vib', 'future_vib', 'failure', 'model']
 
     target = df['failure']
 
