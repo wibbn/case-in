@@ -1,3 +1,4 @@
+import argparse
 import pandas as pd
 import numpy as np
 from catboost import CatBoostClassifier
@@ -8,6 +9,12 @@ from train_nn import train_nn
 import models
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+def _parse_args():
+    p = argparse.ArgumentParser()
+    p.add_argument('--file', type=str)
+
+    return p.parse_args()
 
 def gbm_predict(data):
     model = CatBoostClassifier()
@@ -45,6 +52,8 @@ def maint_predict(data):
     return gbm_out
 
 if __name__ == "__main__":
-    df = pd.read_csv('./data/small_df.csv')
-    s = df.iloc[2]
-    print(maint_predict(s))
+    args = _parse_args()
+
+    df = pd.read_csv(args.file)
+    sample = df.iloc[0]
+    print(maint_predict(sample))

@@ -1,1 +1,4 @@
 /data
+/catboost_info
+/.vscode
+/__pycache__
